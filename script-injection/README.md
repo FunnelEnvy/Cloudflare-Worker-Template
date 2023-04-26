@@ -1,8 +1,8 @@
 # Script Injection
 
-This worker is an example of using HTMLRewriter to manipulate the DOM in order to inject 3rd party code and styling onto a webpage.
+Example using [Cloudflare HTMLRewriter](https://developers.cloudflare.com/workers/runtime-apis/html-rewriter) to intercept a request and add 3rd party code and styling onto a webpage.
 
-## Code Injection
+## JavaScript Injection
 ```js
 .on("head", {
     element(el) {
@@ -15,9 +15,9 @@ This worker is an example of using HTMLRewriter to manipulate the DOM in order t
     }
 })
 ```
-This code will inject javascript files into the head of a webpage.
+Adds JavaScript files into the head of a webpage.
 
-## Style Injection
+## CSS Style Injection
 ```js
 .on("head", {
     element(el) {
@@ -31,8 +31,8 @@ This code will inject javascript files into the head of a webpage.
     }
 })
 ```
-This code will inject style files into the head of a webpage.
+Adds CSS style files into the head of a webpage.
 
 ## Future State
 
-This worker could also have code added to control any flickering that the scripts and styles may be responsible for when they are loaded onto the clients website.
+This worker could also have code added to control any flickering that the scripts and styles may be responsible for when they are loaded onto the website.
