@@ -28,7 +28,7 @@ const handleRequest = async (request: Request): Promise<Response> => {
 						<link
 							rel="stylesheet"
 							type="text/css"
-							href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css"	
+							href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css"
 						>
 					`, { html: true });
 				}
