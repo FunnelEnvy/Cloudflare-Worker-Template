@@ -1,6 +1,6 @@
-# DOM Manipulation Worker
+# DOM Manipulation Cloudflare Worker
 
-This worker is an example of manipulating the DOM of a webpage before the end user views the webpage. The worker uses the Cloudflare class HTMLRewriter to search and edit the DOM.
+Example of direct webpage DOM manipulation made prior to delivering the response to the browser. The worker uses the [Cloudflare HTMLRewriter](https://developers.cloudflare.com/workers/runtime-apis/html-rewriter) to search and edit the DOM.
 
 ## Changing Element Attributes
 ```js
@@ -10,7 +10,7 @@ This worker is an example of manipulating the DOM of a webpage before the end us
     }
 })
 ```
-The code above searches the HTML returned from a request for any image elements and will replace the `src` attribute of the element.
+Searches for any image elements in the request and replaces the `src` attribute of the element.
 
 ## Changing Element Text
 
@@ -28,9 +28,9 @@ Changing element text using HTMLRewriter involves using the text buffer returned
     }
 })
 ```
-This is an example of how to replace the text of an element. The text needs to be replaced only when it is the last text inside of the node, otherwise the text is removed.
+Example of replacing text only when it is the last text inside of the node, otherwise the text is removed.
 
-### Global Find and Replacement
+### Global Find and Replace
 ```js
 .on("*", {
     text(text) {
@@ -44,4 +44,4 @@ This is an example of how to replace the text of an element. The text needs to b
     }
 })
 ```
-This is an example of global find and replace. The text buffer supports regex matching.
+The text buffer supports regex matching.
