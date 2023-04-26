@@ -1,6 +1,6 @@
 # Traffic Split
 
-This worker is an example of traffic splitting a website. The worker funnels visitors into two groups based on a defined percentage (`TRAFFIC_SPLIT_PERCENTAGE`). Once sorted the visitors group is saved using a cookie (`TRAFFIC_SPLIT_COOKIE`).
+Example of A/B testing by serving different versions of a website. This Cloudflare Worker assigns website visitors into two groups based on a defined percentage (`TRAFFIC_SPLIT_PERCENTAGE`). The group assignment is saved using a cookie (`TRAFFIC_SPLIT_COOKIE`).
 
 ## Sort Visitors Into Groups
 ```js
@@ -13,26 +13,26 @@ if (!cookie[env.TRAFFIC_SPLIT_COOKIE]) {
     const oneYear = new Date();
     oneYear.setFullYear(oneYear.getFullYear() + 1);
     newResponse.headers.set("Set-Cookie", serialize(env.TRAFFIC_SPLIT_COOKIE, variant, {
-        domain: ".springboard.com",
+        domain: ".mywebsite.com",
         path: "/",
         expires: oneYear,
     }));
 }
 ```
-This code determines the variant the visitor should see, either the new version of the website or the original / old version. If not already set the code will set a cookie on the response so the user stays in the same workflow they are already sorted into.
+This code checks whether a website visitor has the cookie (already assigned to a group). If not, then will apply the traffic split percentage, assign the group, and set the cookie.
 
-## Respond With Website
+## Respond With Webpage
 
-### If Orignial Variant
+### If "Original" Variant
 ```js
 const newResponse = new Response(original.body, original);
 
 if (variant !== "new") return newResponse;
 ```
 
-If the visitor is sorted into the old variant, return the original request.
+If the visitor is sorted into the old variant, pass-through the original request.
 
-### If New Variant
+### If "New" Variant
 ```js
 const newRequest = new Request(`${origin}${"/new-website" + pathname}${Array.from(searchParams).length > 0 ? "?" + searchParams.toString() : ""}`, request);
 const modifiedResponse = await fetch(newRequest);
@@ -44,4 +44,4 @@ if (modifiedResponse.ok) {
 return newResponse;
 ```
 
-This will fetch the new website. The code assumes that the new webpages are located with the same route but have `/new-website` appended to the beginning. If the new route doesn't exist the code will default to returning the original request.
+Fetch the new website and return as response. Assumes the new webpages are located with the same route but have `/new-website` appended to the beginning. If the new route doesn't exist the code will default to returning the original request.
