@@ -30,7 +30,7 @@ const handleRequest = async (request: Request, env: Env): Promise<Response> => {
 		const oneYear = new Date();
 		oneYear.setFullYear(oneYear.getFullYear() + 1);
 		newResponse.headers.set("Set-Cookie", serialize(env.TRAFFIC_SPLIT_COOKIE, variant, {
-			domain: "example.com",
+			domain: ".mywebsite.com",
 			path: "/",
 			expires: oneYear,
 		}));
