@@ -19,7 +19,7 @@ const handleRequest = async (request: Request, env: Env): Promise<Response> => {
 	const newResponse = new Response(original.body, original);
 
 	const cookie = parse(request.headers.get("cookie") ?? "");
-	let variant;
+	let variant: string;
 
 	// if cookie already exists on request, guest is already sorted
 	if (!cookie[env.TRAFFIC_SPLIT_COOKIE]) {
@@ -30,7 +30,7 @@ const handleRequest = async (request: Request, env: Env): Promise<Response> => {
 		const oneYear = new Date();
 		oneYear.setFullYear(oneYear.getFullYear() + 1);
 		newResponse.headers.set("Set-Cookie", serialize(env.TRAFFIC_SPLIT_COOKIE, variant, {
-			domain: ".mywebsite.com",
+			domain: "example.funnelenvy.com",
 			path: "/",
 			expires: oneYear,
 		}));

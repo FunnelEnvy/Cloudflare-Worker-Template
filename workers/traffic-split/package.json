@@ -1,0 +1,20 @@
+{
+  "name": "traffic-split",
+  "version": "1.0.0",
+  "description": "Example of A/B testing by serving different versions of a website. This Cloudflare Worker assigns website visitors into two groups based on a defined percentage (`TRAFFIC_SPLIT_PERCENTAGE`). The group assignment is saved using a cookie (`TRAFFIC_SPLIT_COOKIE`).",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Connor O'Brien",
+  "license": "MIT",
+  "dependencies": {
+    "cookie": "^0.5.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20230518.0",
+    "@types/cookie": "^0.5.1",
+    "typescript": "^5.1.3",
+    "wrangler": "^3.1.0"
+  }
+}
