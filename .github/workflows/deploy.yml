@@ -11,9 +11,31 @@ jobs:
     name: Deploy
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - run: npm ci
-      - name: Publish
+      - run: lerna bootstrap
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v36
+      - name: Publish Dom Manipulation
+        if: contains(steps.changed-files-specific.outputs.all_changed_files, 'dom-manipulation') == 'true'
         uses: cloudflare/wrangler-action@2.0.0
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: 'workers/dom-manipulation'
+      - name: Publish Script Injection
+        if: contains(steps.changed-files-specific.outputs.all_changed_files, 'script-injection') == 'true'
+        uses: cloudflare/wrangler-action@2.0.0
+        with:
+          apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: 'workers/script-injection'
+      - name: Publish Traffic Split
+        if: contains(steps.changed-files-specific.outputs.all_changed_files, 'traffic-split') == 'true'
+        uses: cloudflare/wrangler-action@2.0.0
+        with:
+          apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: 'workers/traffic-split'
